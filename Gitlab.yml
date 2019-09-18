@@ -2,42 +2,36 @@
   hosts: linux
   become: yes
 
-  tasks:
-    - name: Upgrade
-      apt: 
-        upgrade: dist
-
-    - name: install Base-Pack
-      apt: 
-        name: "{{ packages }}"
-      vars:
-        packages:
-          - mc
-          - snap
-          - docker
-          - docker-compose
+  roles:
+    - base_config
+    - samba
+    # - gitlab
     
-    - name: install Samba
-      apt: 
-        name: "{{ packages }}"
-      vars:
-        packages:
-          - samba
-          - samba-common
-          - python-glade2
+  # tasks:
+  #   # - name: base settings
+  #   #   include: BasePack.yml
       
-    - name: install and run GitLab
-      docker_container:
-        name: gitlab
-        image: gitlab/gitlab-ce:latest
-        restart: yes
-        state: started
-        restart_policy: always
-        ports:
-          - 443:443
-          - 80:80
-          - 23:22
-        volumes:
-          - /gitlab/config:/etc/gitlab
-          - /gitlab/logs:/var/log/gitlab
-          - /gitlab/data:/var/opt/gitlab
+  #   # - name: install Samba
+  #   #   apt: 
+  #   #     name: "{{ packages }}"
+  #   #   vars:
+  #   #     packages:
+  #   #       - samba
+  #   #       - samba-common
+  #   #       - python-glade2
+      
+    # - name: install and run GitLab
+    #   docker_container:
+    #     name: gitlab
+    #     image: gitlab/gitlab-ce:latest
+    #     restart: yes
+    #     state: started
+    #     restart_policy: always
+    #     ports:
+    #       - 443:443
+    #       - 80:80
+    #       - 23:22
+    #     volumes:
+    #       - /gitlab/config:/etc/gitlab
+    #       - /gitlab/logs:/var/log/gitlab
+    #       - /gitlab/data:/var/opt/gitlab

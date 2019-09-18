@@ -1,0 +1,15 @@
+---
+# tasks file for nextcloud
+- name: create folder for nextcloud
+  command: mkdir /root/nextcloud
+
+- name: git clone
+  git: 
+    repo: 'https://github.com/killlomi/DockerNextCloud.git'
+    dest: /root/nextcloud
+
+
+# - name: run nextcloud
+#   docker_compose:
+#     project_src: /root/nextcloud/
+#     state: present

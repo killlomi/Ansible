@@ -1,0 +1,15 @@
+---
+# tasks file for base_config
+- name: Upgrade
+  apt: 
+    upgrade: dist
+
+- name: install Base-Pack
+  apt: 
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - mc
+      - snap
+      - docker
+      - docker-compose
