@@ -1,7 +1,7 @@
 ---
 # tasks file for samba
 - name: install samba pack
-  apt: 
+  apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -9,14 +9,18 @@
       - samba-common
       - python-glade2
 
-- name: copy config smb.conf
-  copy:
-    src: smb.conf
-    dest: /etc/samba
-    mode: 0777
+- name: generate and copy file
+  template:
+    src: smb.j2
+    dest: /etc/samba/smb.conf
 
 - name: create folder
-  command: mkdir /home/user/allaccess
+  file:
+    path: "{{ item.dest + item.name }}"
+    state: directory
+    mode: '0755'
+  loop:
+    "{{ folders }}"
 
 - name: restart samba
   service:
