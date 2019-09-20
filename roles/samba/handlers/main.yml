@@ -1,2 +1,6 @@
 ---
 # handlers file for samba
+- name: Перезагрузить Samba
+  service:
+    name: smbd
+    state: restarted

@@ -1,28 +1,37 @@
 ---
 # tasks file for samba
-- name: install samba pack
+- name: Установка пакетов для Samba
   apt:
     name: "{{ packages }}"
   vars:
     packages:
       - samba
-      - samba-common
-      - python-glade2
 
-- name: generate and copy file
+- name: Создание по шаблону файла конфигураций
   template:
     src: smb.j2
     dest: /etc/samba/smb.conf
+  notify: Перезагрузить Samba
 
-- name: create folder
+- name: Создание папок
   file:
     path: "{{ item.dest + item.name }}"
     state: directory
+    owner: user
+    group: user
     mode: '0755'
   loop:
     "{{ folders }}"
 
-- name: restart samba
-  service:
-    name: smbd
-    state: restarted
+- name: Скинуть на сервер скрипт с созданием пользователей
+  template:
+    src: users.j2
+    dest: /home/user/users.sh
+
+- name: Запустить файл с паролями
+  command: bash /home/user/users.sh
+
+- name: Удалить файл с скриптом создающим пользователей
+  file:
+    path: /home/user/users.sh
+    state: absent

@@ -1,19 +1,15 @@
 [global]
 netbios name = Linux_mashin
 workgroup = WORKGROUP
-server string = Samba Server %v
 security = user
-map to guest = bad user
-name resolve order = bcast host
 wins support = no
-dns proxy = no
+dns proxy = no               
 
 {% for item in folders %}
 [{{ item.name }}]
 path = {{ item.dest+item.name }}
 browsable = yes
 writable = yes
-guest ok = yes
 read only = no
 
 

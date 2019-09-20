@@ -1,2 +1,6 @@
 ---
 # handlers file for base_config
+- name: Добавить докер в автозагрузку
+  service:
+    name: docker
+    state: restarted

@@ -1,15 +1,16 @@
 ---
 # tasks file for base_config
-- name: Upgrade
+- name: Обновление системы
   apt: 
     upgrade: dist
 
-- name: install Base-Pack
+- name: Установка базовых пакетов
   apt: 
     name: "{{ packages }}"
   vars:
     packages:
       - mc
-      - snap
+      # - snap
       - docker
       - docker-compose
+  notify: Добавить докер в автозагрузку
