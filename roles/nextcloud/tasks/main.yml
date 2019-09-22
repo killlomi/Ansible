@@ -1,15 +1,40 @@
 ---
 # tasks file for nextcloud
-- name: create folder for nextcloud
-  command: mkdir /root/nextcloud
+- name: Создать папку для nextcloud
+  file:
+    path: /root/nextcloud
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
-- name: git clone
+- name: git clone nextcloud
   git: 
     repo: 'https://github.com/killlomi/DockerNextCloud.git'
     dest: /root/nextcloud
 
+- name: Запустить docker-compose образ
+  command: docker-compose -f /root/nextcloud/docker-compose.yml up
 
-# - name: run nextcloud
-#   docker_compose:
-#     project_src: /root/nextcloud/
-#     state: present
+  delay:
+    seconds: 20
+
+- name: Копировать файл начальных конфигураций
+  copy:
+    src: autoconfig.php
+    dest: /root/nextcloud/nextcloud/config/autoconfig.php
+    mode: 0777
+
+# - name: Установка дополнительных пакетов
+#   command: cd /root/nextcloud/; docker-compose exec --user www-data app php occ app:install {{ item }}
+#   with_items:
+#     - tasks
+#     - deck
+#     - notes
+#     - calendar
+#     - groupfolders
+#     - apporder
+#     - onlyoffice
+  
+# - name: Конфигурирование onlyoffice
+#   command: docker-compose exec --user www-data app php occ config:app:set onlyoffice DocumentServerUrl --value=http://onlyoffice:8443 
