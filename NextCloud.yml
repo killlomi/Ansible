@@ -1,7 +1,7 @@
-- name: Install GitLab
+- name: Install NextCloud
   hosts: linux
   become: yes
 
   roles:
     - base_config
-    - nextcloud
+    #- nextcloud

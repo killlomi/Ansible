@@ -1,11 +1,11 @@
 ---
 # tasks file for base_config
 - name: Обновление системы
-  apt: 
+  apt:
     upgrade: dist
 
 - name: Установка базовых пакетов
-  apt: 
+  apt:
     name: "{{ packages }}"
   vars:
     packages:
@@ -13,4 +13,9 @@
       # - snap
       - docker
       - docker-compose
-  notify: Добавить докер в автозагрузку
+      - python3-pip
+
+- name: Добавить докер в автозагрузку
+  service:
+    name: docker
+    state: restarted

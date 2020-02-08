@@ -1,5 +1,6 @@
 ---
-# handlers file for base_config
+# Эти куски кода можно вставлять в роли при помощи
+# notification
 - name: Добавить докер в автозагрузку
   service:
     name: docker
