@@ -1,0 +1,6 @@
+- name: Базовая конфигурация системы
+  hosts: linux
+  become: yes
+
+  roles:
+    - base_config

@@ -3,7 +3,7 @@
 
 Плейбуки прописываются в файлах *.yml в корне проекта
 
-```
+```bash
 ansible-playbook playbook.yml
 ```
 

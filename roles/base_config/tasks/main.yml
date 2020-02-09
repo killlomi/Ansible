@@ -10,7 +10,6 @@
   vars:
     packages:
       - mc
-      # - snap
       - docker
       - docker-compose
       - python3-pip

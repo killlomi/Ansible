@@ -4,4 +4,4 @@
 
   roles:
     - base_config
-    #- nextcloud
+    - nextcloud
